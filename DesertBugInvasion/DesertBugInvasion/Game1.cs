@@ -52,8 +52,8 @@ namespace DesertBugInvasion
 
         int _spidersKilled = 0;
         int _fireAntsKilled = 0;
-        int _spiderKillsRequired = 16;
-        int _fireAntKillsRequired = 6;
+        int _spiderKillsRequired = 30;
+        int _fireAntKillsRequired = 8;
         public void SpiderKilled() { _spidersKilled++; }
         public void FireAntKilled() { _fireAntsKilled++; }
 
@@ -269,8 +269,6 @@ namespace DesertBugInvasion
                                             }
                                         }
 
-
-                                        break;
                                     }
                                 }
                             }

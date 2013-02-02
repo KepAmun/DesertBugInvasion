@@ -68,14 +68,19 @@ namespace DesertBugInvasion
         {
             MouseState mouseState = Mouse.GetState();
 
-            int spawnDelayMs =
-                CalcSpawnDelay((int)(gameTime.TotalGameTime.TotalMilliseconds - LevelStartTime.TotalMilliseconds));
+            double spawnsPerSec =
+                CalcSpawnRate(gameTime.TotalGameTime.TotalMilliseconds - LevelStartTime.TotalMilliseconds);
 
-            if (gameTime.TotalGameTime.TotalMilliseconds - _lastSpawnTime.TotalMilliseconds > spawnDelayMs)
+            double secSinceLastSpawn = gameTime.TotalGameTime.TotalSeconds - _lastSpawnTime.TotalSeconds;
+
+            int numToSpawn = (int)(spawnsPerSec * secSinceLastSpawn);
+
+            for (int i = 0; i < numToSpawn; i++)
             {
-                _lastSpawnTime = gameTime.TotalGameTime;
                 SpawnEnemy();
             }
+
+            _lastSpawnTime += TimeSpan.FromSeconds(numToSpawn / spawnsPerSec);
 
 
             // Update all sprites
@@ -193,18 +198,18 @@ namespace DesertBugInvasion
         /// </summary>
         /// <param name="gameTime"></param>
         /// <returns></returns>
-        int CalcSpawnDelay(int levelMs)
+        double CalcSpawnRate(double levelMs)
         {
             double pulsePeriod = 15000.0;
             double x = levelMs / pulsePeriod + LevelNumber + 2;
             double rampRate = 0.2 + 0.05 * (LevelNumber + 2);
-            double spawnRatePerSec = (Math.Cos(x * (2 * Math.PI)) + 1) * rampRate * x;
+            double spawnsPerSec = (Math.Cos(x * (2 * Math.PI)) + 1) * rampRate * x;
             
-            int spawnDelayMs = 0;
-            if (spawnRatePerSec > 0)
-                spawnDelayMs = (int)Math.Round((1 / spawnRatePerSec) * 1000);
+            //int spawnDelayMs = 0;
+            //if (spawnsPerSec > 0)
+            //    spawnDelayMs = (int)Math.Round((1 / spawnsPerSec) * 1000);
 
-            return spawnDelayMs;
+            return spawnsPerSec;
         }
     }
 }
