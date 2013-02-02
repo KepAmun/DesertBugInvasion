@@ -1,3 +1,18 @@
+/*
+ * Desert Bug Invasion
+ * Kep Amun
+ * 
+ * Class project for CSC 5430 Game Programming and Design I
+ * Wayne State University
+ * Fall 2012
+ * 
+ * Code bases from "Learning XNA 4.0" by Aaron Reed
+ * 
+ * Last updated 2/2/2013
+ * 
+ */
+
+
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
